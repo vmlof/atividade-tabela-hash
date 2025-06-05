@@ -10,6 +10,18 @@ public class GeradorDeDados {
     }
 
     public static void gerarArquivosDeDados() {
+
+        File pastaDados = new File("src/dados");
+        if (!pastaDados.exists()) {
+            boolean pastaCriada = pastaDados.mkdirs();
+            if (pastaCriada) {
+                System.out.println("✅ Pasta 'src/dados' criada com sucesso.");
+            } else {
+                System.err.println("❌ Falha ao criar a pasta 'src/dados'. Verifique permissões.");
+                return;
+            }
+        }
+
         for (int i = 0; i < TAMANHOS_DOS_DADOS.length; i++) {
             gerarESalvarDados(TAMANHOS_DOS_DADOS[i], SEMENTES[i]);
         }
@@ -17,7 +29,7 @@ public class GeradorDeDados {
 
     private static void gerarESalvarDados(int tamanho, long semente) {
         Random aleatorio = new Random(semente);
-        String nomeArquivo = "dados_" + tamanho + ".txt";
+        String nomeArquivo = "src/dados/dados_" + tamanho + ".txt";
 
         try (BufferedWriter escritor = new BufferedWriter(new FileWriter(nomeArquivo))) {
             for (int i = 0; i < tamanho; i++) {
